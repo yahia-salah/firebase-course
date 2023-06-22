@@ -93,7 +93,7 @@ import { MatNativeDateModule } from "@angular/material/core";
       const firestore = getFirestore();
 
       if (environment.useEmulators)
-        connectFirestoreEmulator(firestore, "localhost", 8080);
+        connectFirestoreEmulator(firestore, "localhost", 8090);
 
       return firestore;
     }),

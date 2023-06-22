@@ -11,6 +11,7 @@
     "firebase": "firebase",
     "empty-emulator": "firebase emulators:start",
     "emulator": "firebase emulators:start --import test-data",
+    "local-dev": "firebase emulators:start --only firestore,auth,storage --import test-data",
     "export": "firebase emulators:export test-data"
   },
   "private": true,

@@ -10,6 +10,7 @@ import {
   redirectUnauthorizedTo,
 } from "@angular/fire/auth-guard";
 import { CreateUserComponent } from "./create-user/create-user.component";
+import { CourseResolver } from "./services/course.resolver";
 
 const routes: Routes = [
   {
@@ -35,6 +36,9 @@ const routes: Routes = [
   {
     path: "courses/:courseUrl",
     component: CourseComponent,
+    resolve: {
+      course: CourseResolver
+    },
   },
   {
     path: "**",
