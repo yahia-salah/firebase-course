@@ -27,6 +27,12 @@ import {
 export class CoursesService {
   constructor(private db: Firestore) {}
 
+  createId() {
+    return from(addDoc(collection(this.db, "/courses"), {})).pipe(
+      map((docRef) => docRef.id)
+    );
+  }
+
   findLessons(
     courseId: string,
     sortOrder: OrderByDirection = "asc",
