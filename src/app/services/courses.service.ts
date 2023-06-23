@@ -28,9 +28,16 @@ export class CoursesService {
   constructor(private db: Firestore) {}
 
   createId() {
-    return from(addDoc(collection(this.db, "/courses"), {})).pipe(
-      map((docRef) => docRef.id)
-    );
+    // Get the collection reference
+    const collectionRef = collection(this.db, "/courses");
+
+    // Generate "locally" a new document for the given collection reference
+    const docRef = doc(collectionRef);
+
+    // Get the new document Id
+    const documentUuid = docRef.id;
+
+    return documentUuid;
   }
 
   findLessons(

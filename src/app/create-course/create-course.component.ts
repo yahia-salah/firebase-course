@@ -97,15 +97,8 @@ export class CreateCourseComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.coursesService
-      .createId()
-      .pipe(
-        tap((id) => {
-          this.courseId = id;
-          console.log("new id", this.courseId);
-        })
-      )
-      .subscribe();
+    this.courseId = this.coursesService.createId();
+    console.log("new id", this.courseId);
   }
 
   onCreateCourse() {
