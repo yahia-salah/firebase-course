@@ -1,6 +1,4 @@
 import * as functions from "firebase-functions";
-import { db } from "./init";
-import { FieldValue } from "firebase-admin/firestore";
 
 /**
  * Import function triggers from their respective submodules:
@@ -21,15 +19,31 @@ export const onAddCourseUpdatePromoCounter = functions
   })
   .firestore.document("courses/{courseId}")
   .onCreate(async (snap, context) => {
-    functions.logger.debug(
-      `Running add course trigger for courseId ${context.params.courseId}`
-    );
+    await (
+      await import("./promotions-counter/on-add-course")
+    ).default(snap, context);
+  });
 
-    const course = snap.data();
+export const onCourseUpdatedUpdatePromoCounter = functions
+  .runWith({
+    timeoutSeconds: 300,
+    memory: "128MB",
+  })
+  .firestore.document("courses/{courseId}")
+  .onUpdate(async (change, context) => {
+    await (
+      await import("./promotions-counter/on-course-updated")
+    ).default(change, context);
+  });
 
-    if (course.promo) {
-      return db.doc("/course/stats").update({
-        totalPromo: FieldValue.increment(1),
-      });
-    }
+export const onDeleteCourseUpdatePromoCounter = functions
+  .runWith({
+    timeoutSeconds: 300,
+    memory: "128MB",
+  })
+  .firestore.document("courses/{courseId}")
+  .onDelete(async (snap, context) => {
+    await (
+      await import("./promotions-counter/on-delete-course")
+    ).default(snap, context);
   });
